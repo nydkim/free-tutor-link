@@ -1,69 +1,10 @@
 import React, { Component } from 'react';
 
-export class AddSkills extends Component {
+export class AddSkill extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-
-  // updateJavascript(value) {
-  //   this.setState({ ...this.state, javascript: value });
-  // }
-  // updateSQL(value) {
-  //   this.setState({ ...this.state, SQL: value });
-  // }
-  // updateReact(value) {
-  //   this.setState({ ...this.state, React: value });
-  // }
-  // updateNode(value) {
-  //   this.setState({ ...this.state, Nodejs: value });
-  // }
-  // updateHTML(value) {
-  //   this.setState({ ...this.state, HTML: value });
-  // }
-  // updateCSS(value) {
-  //   this.setState({ ...this.state, CSS: value });
-  // }
-  // updateRedux(value) {
-  //   this.setState({ ...this.state, Redux: value });
-  // }
-  // eventHandler() {
-  //   const javascript = this.state.javascript;
-  //   const SQL = this.state.SQL;
-  //   const React = this.state.React;
-  //   const Node = this.state.Node;
-  //   const HTML = this.state.HTML;
-  //   const CSS = this.state.CSS;
-  //   const Redux = this.state.Redux;
-  //   this.setState({
-  //     javascript: '',
-  //     SQL: '',
-  //     React: '',
-  //     Nodejs: '',
-  //     HTML: '',
-  //     CSS: '',
-  //     Redux: '',
-  //   });
-  // const body = { javascript, lastName, email, userName, passWord };
-  // const body = { javascript, SQL, React, Nodejs, HTML, CSS, Redux };
-
-  //   fetch('/createSkills', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'Application/JSON',
-  //     },
-  //     body: JSON.stringify(body),
-  //   })
-  //     .then((resp) => resp.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       // props.history.push('/');
-  //     })
-  //     .catch((err) =>
-  //       console.log('Register User fetch /api/create: ERROR: ', err)
-  //     );
-  // }
-
   updateSkills(e) {
     const skill = e.target.value;
     const newState = Object.assign({}, this.state);
@@ -87,7 +28,6 @@ export class AddSkills extends Component {
   componentDidUpdate() {
     console.log('THIS.STATE******', this.state);
   }
-
   render() {
     return (
       <div>
@@ -160,4 +100,5 @@ export class AddSkills extends Component {
     );
   }
 }
-export default AddSkills;
+
+export default AddSkill;

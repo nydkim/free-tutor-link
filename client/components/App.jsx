@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Login from './Login.js';
 import User from './User.js';
 import { BrowserRouter, Link, Redirect } from 'react-router-dom';
-import AddSkills from './mainPage/AddSkills.js';
+import AddSkill from './mainPage/AddSkill.js';
 
 const App = (props) => {
   // cheking if user is authenicated and reult is True render
@@ -21,7 +21,8 @@ const App = (props) => {
           <Login />
         </Route>
         <Route path="/addSkills">
-          <AddSkills />
+          {/* <AddSkills /> */}
+          <AddSkill />
         </Route>
       </Switch>
     </BrowserRouter>
