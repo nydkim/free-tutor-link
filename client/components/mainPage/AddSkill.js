@@ -25,7 +25,12 @@ export class AddSkill extends Component {
         'Content-Type': 'Application/JSON',
       },
       body: JSON.stringify(this.state.skills),
-    }).then();
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
   }
   componentDidUpdate() {
     console.log('THIS.STATE******', this.state);
