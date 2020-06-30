@@ -45,7 +45,8 @@ loginController.getAccessToken = (req, res, next) => {
           .identifier;
 
       res.locals.newUser = {
-        name: `${firstName} ${lastName}`,
+        firstName: `${firstName}`,
+        lastName: `${lastName}`,
         //  userid: id,
         imgUrl,
       };
@@ -57,25 +58,31 @@ loginController.getAccessToken = (req, res, next) => {
     })
     .then((emailRes) => {
       const email = emailRes.body.elements[0]['handle~'].emailAddress;
-      res.locals.newUser.email = email;
-      // console.log('newUser info: ', res.locals.newUser);
-      // add user to database
+      res.locals.newUser.eMail = email;
+
       const userData = res.locals.newUser;
-      // console.log('abanaxee>>>', userData);
-      const sqlQuery = `INSERT INTO tutors (email, name, photo) VALUES ($1, $2, $3)`;
-      db.query(sqlQuery, [userData.email, userData.name, userData.imgUrl]).then(
-        () => {
+      const { firstName, lastName, imgUrl, eMail } = userData;
+
+      const selectQueryString = `SELECT username FROM useraccount_linkedin WHERE username = '${eMail}'`;
+      db.query(selectQueryString).then((result) => {
+        if (result.rows.length) {
+          return next();
+        }
+
+        const sqlQuery = `INSERT INTO useraccount_linkedin (first_name, last_name, username, photo_url) VALUES ('${firstName}', '${lastName}', '${eMail}', '${imgUrl}')`;
+        db.query(sqlQuery).then(() => {
           console.log('WORKINGGGG!');
           // const sqlQuery = `SELECT _id FROM tutors where order`
           // db
           // .query(sqlQuery)
-        }
-      );
-      // cookies?
-      // return res.redirect('http://localhost:3000/home');  // es sanaxavia ???
-      // cookies with username userargerg eargerg ewt hfes
-      return next();
+        });
+        // cookies?
+        // return res.redirect('http://localhost:3000/home');  // es sanaxavia ???
+        // cookies with username userargerg eargerg ewt hfes
+        return next();
+      });
     })
+
     .catch((err) => {
       return next({
         log: `Error in loginController.getAccessToken: ${err}`,
