@@ -3,17 +3,21 @@ import React, { Component } from 'react';
 export class AddSkill extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { skills: [] };
+    this.updateSkills = this.updateSkills.bind(this);
   }
+
   updateSkills(e) {
-    const skill = e.target.value;
-    const newState = Object.assign({}, this.state);
-    if (newState[skill]) {
-      delete newState[skill];
+    const skill = e.target.id;
+    const newSkills = this.state.skills.slice();
+    if (newSkills.indexOf(skill) !== -1) {
+      const index = newSkills.indexOf(skill);
+      newSkills.splice(index, 1);
+      this.setState({ skills: newSkills });
     } else {
-      newState[skill] = true;
+      newSkills.push(skill);
+      this.setState({ skills: newSkills });
     }
-    this.setState(newState);
   }
 
   submitSkills() {
@@ -22,7 +26,7 @@ export class AddSkill extends Component {
       headers: {
         'Content-Type': 'Application/JSON',
       },
-      body: JSON.stringify(Object.keys(this.state)),
+      body: JSON.stringify(this.state.skills),
     }).then();
   }
   componentDidUpdate() {
@@ -41,13 +45,7 @@ export class AddSkill extends Component {
         ></input>
         <label for="1">JavaScript</label>
         <br />
-        <input
-          type="checkbox"
-          id="2"
-          name="SQL"
-          value="SQL"
-          onChange={this.updateSkills}
-        ></input>
+        <input type="checkbox" id="2" name="SQL" value="SQL" onChange={this.updateSkills}></input>
         <label for="2">SQL</label>
         <br />
         <input
@@ -68,22 +66,10 @@ export class AddSkill extends Component {
         ></input>
         <label for="4">Node Express</label>
         <br />
-        <input
-          type="checkbox"
-          id="5"
-          name="HTML"
-          value="HTML"
-          onChange={this.updateSkills}
-        ></input>
+        <input type="checkbox" id="5" name="HTML" value="HTML" onChange={this.updateSkills}></input>
         <label for="5">HTML</label>
         <br />
-        <input
-          type="checkbox"
-          id="6"
-          name="CSS"
-          value="CSS"
-          onChange={this.updateSkills}
-        ></input>
+        <input type="checkbox" id="6" name="CSS" value="CSS" onChange={this.updateSkills}></input>
         <label for="6">CSS</label>
         <br />
         <input
