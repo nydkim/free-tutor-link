@@ -41,8 +41,7 @@ loginController.getAccessToken = (req, res, next) => {
       const lastName = Object.values(userRes.body.lastName.localized)[0];
       const { id } = userRes.body;
       const imgUrl =
-        userRes.body.profilePicture['displayImage~'].elements[1].identifiers[0]
-          .identifier;
+        userRes.body.profilePicture['displayImage~'].elements[1].identifiers[0].identifier;
 
       res.locals.newUser = {
         firstName: `${firstName}`,
@@ -51,9 +50,7 @@ loginController.getAccessToken = (req, res, next) => {
         imgUrl,
       };
       return request
-        .get(
-          'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))'
-        )
+        .get('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))')
         .set('Authorization', `Bearer ${res.locals.accessToken}`);
     })
     .then((emailRes) => {
@@ -77,7 +74,7 @@ loginController.getAccessToken = (req, res, next) => {
           // .query(sqlQuery)
         });
         // cookies?
-        // return res.redirect('http://localhost:3000/home');  // es sanaxavia ???
+        return res.redirect('http://localhost:3000/home'); // es sanaxavia ???
         // cookies with username userargerg eargerg ewt hfes
         return next();
       });
