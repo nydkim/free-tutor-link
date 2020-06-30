@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-
 export class AddSkill extends Component {
   constructor(props) {
     super(props);
     this.state = { skills: [] };
     this.updateSkills = this.updateSkills.bind(this);
+<<<<<<< HEAD
+=======
+    this.submitSkills = this.submitSkills.bind(this);
+>>>>>>> f80bd96ef17c1907ec45aa0106f0effe9b23f909
   }
 
   updateSkills(e) {
@@ -19,7 +22,6 @@ export class AddSkill extends Component {
       this.setState({ skills: newSkills });
     }
   }
-
   submitSkills() {
     fetch('/createSkills', {
       method: 'POST',
@@ -86,5 +88,4 @@ export class AddSkill extends Component {
     );
   }
 }
-
 export default AddSkill;
