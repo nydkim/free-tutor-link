@@ -1,28 +1,30 @@
 import React, { Component } from 'react';
-
 export class AddSkill extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { skills: [] };
+    this.updateSkills = this.updateSkills.bind(this);
+    this.submitSkills = this.submitSkills.bind(this);
   }
   updateSkills(e) {
-    const skill = e.target.value;
-    const newState = Object.assign({}, this.state);
-    if (newState[skill]) {
-      delete newState[skill];
+    const skill = e.target.id;
+    const newSkills = this.state.skills.slice();
+    if (newSkills.indexOf(skill) !== -1) {
+      const index = newSkills.indexOf(skill);
+      newSkills.splice(index, 1);
+      this.setState({ skills: newSkills });
     } else {
-      newState[skill] = true;
+      newSkills.push(skill);
+      this.setState({ skills: newSkills });
     }
-    this.setState(newState);
   }
-
   submitSkills() {
     fetch('/createSkills', {
       method: 'POST',
       headers: {
         'Content-Type': 'Application/JSON',
       },
-      body: JSON.stringify(Object.keys(this.state)),
+      body: JSON.stringify(this.state.skills),
     }).then();
   }
   componentDidUpdate() {
@@ -100,5 +102,4 @@ export class AddSkill extends Component {
     );
   }
 }
-
 export default AddSkill;

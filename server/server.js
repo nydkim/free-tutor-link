@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 const availabilityRouter = require('./routes/availability.js');
 const loginRouter = require('./routes/login.js');
 const profileRouter = require('./routes/profile.js');
+const addSkillRouter = require('./routes/addSkillRoute.js');
 
 app.use((req, res, next) => {
   console.log(`
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use('/availability', availabilityRouter);
 app.use('/login', loginRouter);
 app.use('/profile', profileRouter);
+app.use('/createSkills', addSkillRouter);
 
 /**
  * route handler to respond with main app
