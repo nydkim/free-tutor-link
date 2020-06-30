@@ -2,18 +2,27 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Login from './Login.js';
 import User from './User.js';
-import { BrowserRouter, Link } from 'react-router-dom';
+import { BrowserRouter, Link, Redirect } from 'react-router-dom';
+import AddSkill from './mainPage/AddSkill.js';
 
 const App = (props) => {
   // cheking if user is authenicated and reult is True render
+  const loggedIn = document.cookie
+    .split(';')
+    .some((item) => item.trim().startsWith('acceptedBBB='));
+  console.log(loggedIn);
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
+          {loggedIn ? <User /> : <Redirect to="/signin" />}
+        </Route>
+        <Route exact path="/signin">
           <Login />
         </Route>
-        <Route path="/home">
-          <User />
+        <Route path="/addSkills">
+          {/* <AddSkills /> */}
+          <AddSkill />
         </Route>
       </Switch>
     </BrowserRouter>
