@@ -63,13 +63,15 @@ loginController.getAccessToken = (req, res, next) => {
       const userData = res.locals.newUser;
       const { firstName, lastName, imgUrl, eMail } = userData;
 
-      const selectQueryString = `SELECT username FROM useraccount_linkedin WHERE username = '${eMail}'`;
+      const selectQueryString = `SELECT username FROM users WHERE username = '${eMail}'`;
       db.query(selectQueryString).then((result) => {
         if (result.rows.length) {
+          console.log(result.rows[0]);
+          res.cookie('acceptedBBB', result.rows[0]);
           return next();
         }
 
-        const sqlQuery = `INSERT INTO useraccount_linkedin (first_name, last_name, username, photo_url) VALUES ('${firstName}', '${lastName}', '${eMail}', '${imgUrl}')`;
+        const sqlQuery = `INSERT INTO users (first_name, last_name, username, photo_url) VALUES ('${firstName}', '${lastName}', '${eMail}', '${imgUrl}')`;
         db.query(sqlQuery).then(() => {
           console.log('WORKINGGGG!');
           // const sqlQuery = `SELECT _id FROM tutors where order`
