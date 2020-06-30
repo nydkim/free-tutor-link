@@ -21,10 +21,10 @@ loginController.getAccessToken = (req, res, next) => {
     )
     .then((accessRes) => {
       res.locals.accessToken = accessRes.body.access_token;
-      res.cookie('accessToken', res.locals.accessToken, {
-        httpOnly: true,
-        secure: true,
-      });
+      // res.cookie('accessToken', res.locals.accessToken, {
+      //   httpOnly: true,
+      //   secure: true,
+      // });
       // console.log('lev1', res.locals.accessToken);
       return request
         .get(
@@ -60,13 +60,15 @@ loginController.getAccessToken = (req, res, next) => {
       const userData = res.locals.newUser;
       const { firstName, lastName, imgUrl, eMail } = userData;
 
-      const selectQueryString = `SELECT username FROM useraccount_linkedin WHERE username = '${eMail}'`;
+      const selectQueryString = `SELECT username FROM users WHERE username = '${eMail}'`;
       db.query(selectQueryString).then((result) => {
         if (result.rows.length) {
+          console.log(result.rows[0].username);
+          res.cookie('acceptedBBB', result.rows[0].username);
           return next();
         }
 
-        const sqlQuery = `INSERT INTO useraccount_linkedin (first_name, last_name, username, photo_url) VALUES ('${firstName}', '${lastName}', '${eMail}', '${imgUrl}')`;
+        const sqlQuery = `INSERT INTO users (first_name, last_name, username, photo_url) VALUES ('${firstName}', '${lastName}', '${eMail}', '${imgUrl}')`;
         db.query(sqlQuery).then(() => {
           console.log('WORKINGGGG!');
           // const sqlQuery = `SELECT _id FROM tutors where order`
