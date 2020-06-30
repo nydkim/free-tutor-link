@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Main from './mainPage/Main';
 import Profile from './profilePage/Profile';
+import { BrowserRouter, Link, Redirect } from 'react-router-dom';
 
 const User = (props) => {
   const [mainPage, setMainPage] = useState(true);
@@ -20,6 +21,11 @@ const User = (props) => {
     return (
       <div>
         <Main handleToProfile={handleToProfile} />
+        <Link to={`/addSkills`}>
+          <button type="button" className="btnSecondary">
+            I am a Tutor
+          </button>
+        </Link>
       </div>
     );
   }
@@ -28,13 +34,18 @@ const User = (props) => {
     return (
       <div>
         <Profile handleToMain={handleToMain} />
+        <Link to={`/addSkills`}>
+          <button type="button" className="btnSecondary">
+            I would like to tutor
+          </button>
+        </Link>
       </div>
     );
   }
 
   return (
     <div>
-      <div>Hello World, you're in the wrong place!</div>
+      <div>Hello, you're in the wrong place!</div>
     </div>
   );
 };

@@ -15,25 +15,26 @@ const AvailableTutor = (props) => {
       </span>
       <span>
         {/* <a href={`mailto: ${props.email}`}>Send an Email</a> */}
-        <a
+
+        <button
+          type="button"
+          onClick={window.open(
+            'mailto:' +
+              `${props.email}` +
+              '?subject=Hi&body=Hi%20there,%20I%20am%20interested%20in%20a%20tutoring%20session.'
+          )}
+        >
+          Contact Tutor
+        </button>
+        {/* <a
           href={window.open(
             'mailto:' +
               `${props.email}` +
               '?subject=Test&body=Hi%20there,%20I%20am%20interested%20in%20a%20tutoring%20session.'
           )}
-        >
-          Send an Email
-        </a>
-
-        {/* window.open(
-            "mailto:" +
-              this.state.recipientEmail +
-              "?subject=Postcard%20Created%20Just%20For%20" +
-              this.state.recipientName +
-              "!%20(From:%20" +
-              this.state.senderName +
-              ")&body=[Note%20to%20sender:%20screenshot%20and%20paste%20postcard%20here]"
-          ) */}
+        > */}
+        {/* Send an Email */}
+        {/* </a> */}
       </span>
     </div>
   );

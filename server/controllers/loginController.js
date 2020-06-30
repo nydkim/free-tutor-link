@@ -21,10 +21,10 @@ loginController.getAccessToken = (req, res, next) => {
     )
     .then((accessRes) => {
       res.locals.accessToken = accessRes.body.access_token;
-      res.cookie('accessToken', res.locals.accessToken, {
-        httpOnly: true,
-        secure: true,
-      });
+      // res.cookie('accessToken', res.locals.accessToken, {
+      //   httpOnly: true,
+      //   secure: true,
+      // });
       // console.log('lev1', res.locals.accessToken);
       return request
         .get(
@@ -66,8 +66,8 @@ loginController.getAccessToken = (req, res, next) => {
       const selectQueryString = `SELECT username FROM users WHERE username = '${eMail}'`;
       db.query(selectQueryString).then((result) => {
         if (result.rows.length) {
-          console.log(result.rows[0]);
-          res.cookie('acceptedBBB', result.rows[0]);
+          console.log(result.rows[0].username);
+          res.cookie('acceptedBBB', result.rows[0].username);
           return next();
         }
 
