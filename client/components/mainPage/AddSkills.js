@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 const AddSkills = (props) => {
   return (
     <div>
-      {/* <select name="skills" id="skills" value={props.choice} onChange={props.handleChoice}>
-        <option value="JavaScript">JavaScript</option>
-        <option value="React">React</option>
-        <option value="SQL">SQL</option>
-        <option value="Node_Express">Node Express</option>
-        <option value="Ruby">Ruby</option>
-        <option value="MongoDB">MongoDB</option>
-      </select>
-      <button onClick={props.handleSearch}>Search</button> */}
-
       <input
         type="checkbox"
         id="1"
@@ -43,6 +35,7 @@ const AddSkills = (props) => {
       <br />
       <input type="checkbox" id="7" name="Redux" value="Redux"></input>
       <label for="7">Redux</label>
+
       <br />
     </div>
   );
