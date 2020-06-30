@@ -50,7 +50,11 @@ const Main = (props) => {
       <div>
         <button onClick={props.handleToProfile}>My Tutoring Times</button>
       </div>
-      <Search handleSearch={handleSearch} handleChoice={handleChoice} choice={choice} />
+      <Search
+        handleSearch={handleSearch}
+        handleChoice={handleChoice}
+        choice={choice}
+      />
       <div>{tutors}</div>
     </div>
   );

@@ -21,8 +21,11 @@ loginController.getAccessToken = (req, res, next) => {
     )
     .then((accessRes) => {
       res.locals.accessToken = accessRes.body.access_token;
-      res.cookie('accessToken', res.locals.accessToken, { httpOnly: true, secure: true });
-      console.log('lev1', res.locals.accessToken);
+      res.cookie('accessToken', res.locals.accessToken, {
+        httpOnly: true,
+        secure: true,
+      });
+      // console.log('lev1', res.locals.accessToken);
       return request
         .get(
           'https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))'
@@ -30,39 +33,49 @@ loginController.getAccessToken = (req, res, next) => {
         .set('Authorization', `Bearer ${res.locals.accessToken}`);
     })
     .then((userRes) => {
+      // console.log(
+      //   userRes.body.profilePicture['displayImage~'].elements[1].identifiers[0]
+      //     .identifier
+      // );
       const firstName = Object.values(userRes.body.firstName.localized)[0];
       const lastName = Object.values(userRes.body.lastName.localized)[0];
       const { id } = userRes.body;
       const imgUrl =
-        userRes.body.profilePicture['displayImage~'].elements[0].identifiers[0].identifier;
+        userRes.body.profilePicture['displayImage~'].elements[1].identifiers[0]
+          .identifier;
+
       res.locals.newUser = {
         name: `${firstName} ${lastName}`,
-      //  userid: id,
+        //  userid: id,
         imgUrl,
       };
       return request
-        .get('https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))')
+        .get(
+          'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))'
+        )
         .set('Authorization', `Bearer ${res.locals.accessToken}`);
     })
     .then((emailRes) => {
       const email = emailRes.body.elements[0]['handle~'].emailAddress;
       res.locals.newUser.email = email;
-      console.log('newUser info: ', res.locals.newUser);
+      // console.log('newUser info: ', res.locals.newUser);
       // add user to database
       const userData = res.locals.newUser;
-	    const sqlQuery = `INSERT INTO tutors (email, name, photo) VALUES ($1, $2, $3)` ;
-	    db
-		    .query(sqlQuery, [userData.email, userData.name, userData.imgUrl])
-		    .then(() => {
-          console.log('WORKINGGGG!')
-          // const sqlQuery = `SELECT _id FROM tutors where order` 
+      // console.log('abanaxee>>>', userData);
+      const sqlQuery = `INSERT INTO tutors (email, name, photo) VALUES ($1, $2, $3)`;
+      db.query(sqlQuery, [userData.email, userData.name, userData.imgUrl]).then(
+        () => {
+          console.log('WORKINGGGG!');
+          // const sqlQuery = `SELECT _id FROM tutors where order`
           // db
           // .query(sqlQuery)
         }
-        )
+      );
       // cookies?
-      return res.redirect('http://localhost:3000/home');
-    }) 
+      // return res.redirect('http://localhost:3000/home');  // es sanaxavia ???
+      // cookies with username userargerg eargerg ewt hfes
+      return next();
+    })
     .catch((err) => {
       return next({
         log: `Error in loginController.getAccessToken: ${err}`,

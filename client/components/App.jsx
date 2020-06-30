@@ -1,11 +1,13 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Login from "./Login.js";
-import User from "./User.js";
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Login from './Login.js';
+import User from './User.js';
+import { BrowserRouter, Link } from 'react-router-dom';
 
 const App = (props) => {
+  // cheking if user is authenicated and reult is True render
   return (
-    <div>
+    <BrowserRouter>
       <Switch>
         <Route exact path="/">
           <Login />
@@ -14,7 +16,7 @@ const App = (props) => {
           <User />
         </Route>
       </Switch>
-    </div>
+    </BrowserRouter>
   );
 };
 

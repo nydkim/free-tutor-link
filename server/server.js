@@ -3,7 +3,8 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+
 const availabilityRouter = require('./routes/availability.js');
 const loginRouter = require('./routes/login.js');
 const profileRouter = require('./routes/profile.js');
@@ -30,12 +31,15 @@ app.use('/profile', profileRouter);
 /**
  * route handler to respond with main app
  */
-app.use('/build', express.static(path.join(__dirname, '../build')));
-app.get('/home', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
+// app.use('/build', express.static(path.join(__dirname, '../build')));
+// app.get('/home', (req, res) =>
+//   res.sendFile(path.join(__dirname, '../index.html'))
+// );
+
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
 
 // catch-all route handler for any requests to an unknown route
-app.use((req, res) => res.status(404).send('Wake up Neo... Knock, knock.'));
+// app.use((req, res) => res.status(404).send('Wake up Neo... Knock, knock.'));
 
 /**
  * configire express global error handler
@@ -61,4 +65,4 @@ app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 });
 
-module.exports = app;
+// module.exports = app;
